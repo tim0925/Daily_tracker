@@ -3,9 +3,9 @@ const STORAGE_KEY = "trackerData";
 const IS_MOBILE = window.matchMedia("(max-width: 600px)").matches;
 
 const RINGS = {
-  work: { el: document.getElementById("ring-work"), spectrum: document.getElementById("ring-work-spectrum"), r: 88 },
-  exercise: { el: document.getElementById("ring-exercise"), spectrum: document.getElementById("ring-exercise-spectrum"), r: 66 },
-  calorie: { el: document.getElementById("ring-calorie"), spectrum: document.getElementById("ring-calorie-spectrum"), r: 44 }
+  work: { el: document.getElementById("ring-work"), r: 88 },
+  exercise: { el: document.getElementById("ring-exercise"), r: 66 },
+  calorie: { el: document.getElementById("ring-calorie"), r: 44 }
 };
 
 function todayKey() {
@@ -145,16 +145,17 @@ function getRingCenter() {
 
 function spawnLasers(count) {
   const center = getRingCenter();
+  const duration = IS_MOBILE ? 700 : 350;
   for (let i = 0; i < count; i++) {
     const beam = document.createElement("div");
-    beam.className = "laser-beam";
+    beam.className = IS_MOBILE ? "laser-beam slow" : "laser-beam";
     beam.style.left = `${center.x}px`;
     beam.style.top = `${center.y}px`;
     beam.style.background = `linear-gradient(90deg, transparent, ${CELEBRATION_COLOR}, transparent)`;
     beam.style.setProperty("--angle", `${Math.random() * 360}deg`);
 
     document.body.appendChild(beam);
-    setTimeout(() => beam.remove(), 350);
+    setTimeout(() => beam.remove(), duration);
   }
 }
 
@@ -196,12 +197,12 @@ function spawnSmallCelebration(originEl, ringKey) {
 }
 
 function spawnSupernova(ringsConfig) {
-  const duration = IS_MOBILE ? 400 : 2200;
+  const duration = 400;
   Object.values(ringsConfig).forEach(({ el }) => {
-    el.classList.remove("supernova", "supernova-light");
+    el.classList.remove("supernova-light");
     void el.offsetWidth;
-    el.classList.add(IS_MOBILE ? "supernova-light" : "supernova");
-    setTimeout(() => el.classList.remove("supernova", "supernova-light"), duration);
+    el.classList.add("supernova-light");
+    setTimeout(() => el.classList.remove("supernova-light"), duration);
   });
 }
 
@@ -209,10 +210,10 @@ function spawnMegaCelebration(ringsConfig) {
   spawnFlash();
   spawnSupernova(ringsConfig);
 
-  const laserWaves = IS_MOBILE ? 3 : 10;
-  const laserCount = IS_MOBILE ? 4 : 6;
+  const laserWaves = IS_MOBILE ? 9 : 10;
+  const laserInterval = IS_MOBILE ? 360 : 180;
   for (let w = 0; w < laserWaves; w++) {
-    setTimeout(() => spawnLasers(laserCount), w * 180);
+    setTimeout(() => spawnLasers(6), w * laserInterval);
   }
 
   const waves = IS_MOBILE ? 3 : 8;
@@ -229,51 +230,6 @@ function playPopAnimations(ringEl, btn) {
   void btn.offsetWidth;
   ringEl.classList.add("ring-pop");
   btn.classList.add("btn-pop");
-}
-
-function buildSpectrumPath(r, amplitudes) {
-  const n = amplitudes.length;
-  let d = "";
-  for (let i = 0; i <= n; i++) {
-    const angle = (i / n) * Math.PI * 2;
-    const radius = r + amplitudes[i % n];
-    const x = 100 + Math.cos(angle) * radius;
-    const y = 100 + Math.sin(angle) * radius;
-    d += `${i === 0 ? "M" : "L"}${x.toFixed(2)} ${y.toFixed(2)} `;
-  }
-  return d + "Z";
-}
-
-function spawnRingSpectrum(spectrumEl, r, duration = 1400) {
-  if (IS_MOBILE) return;
-
-  const maxAmp = r * 0.18;
-  const points = 28;
-  const frameInterval = 1000 / 30;
-  const start = performance.now();
-  let lastFrame = 0;
-
-  spectrumEl.style.opacity = "1";
-
-  function frame(now) {
-    const elapsed = now - start;
-    const t = Math.min(elapsed / duration, 1);
-
-    if (now - lastFrame >= frameInterval) {
-      lastFrame = now;
-      const decay = Math.pow(1 - t, 1.5);
-      const amplitudes = Array.from({ length: points }, () => (Math.random() * 2 - 1) * maxAmp * decay);
-      spectrumEl.setAttribute("d", buildSpectrumPath(r, amplitudes));
-    }
-
-    if (t < 1) {
-      requestAnimationFrame(frame);
-    } else {
-      spectrumEl.style.opacity = "0";
-    }
-  }
-
-  requestAnimationFrame(frame);
 }
 
 const CELEBRATION_COLOR = "#ffb800";
@@ -310,7 +266,6 @@ document.getElementById("today-date").textContent = formatDate(new Date());
 
     if (today[ringKey] === 1) {
       playPopAnimations(RINGS[ringKey].el, btn);
-      spawnRingSpectrum(RINGS[ringKey].spectrum, RINGS[ringKey].r);
       spawnConfetti(btn, ringKey);
       spawnSmallCelebration(btn, ringKey);
     }
@@ -331,9 +286,9 @@ updateAll();
 /* ---------- Calendar ---------- */
 
 const DETAIL_RINGS = {
-  work: { el: document.getElementById("detail-ring-work"), spectrum: document.getElementById("detail-ring-work-spectrum"), r: 88 },
-  exercise: { el: document.getElementById("detail-ring-exercise"), spectrum: document.getElementById("detail-ring-exercise-spectrum"), r: 66 },
-  calorie: { el: document.getElementById("detail-ring-calorie"), spectrum: document.getElementById("detail-ring-calorie-spectrum"), r: 44 }
+  work: { el: document.getElementById("detail-ring-work"), r: 88 },
+  exercise: { el: document.getElementById("detail-ring-exercise"), r: 66 },
+  calorie: { el: document.getElementById("detail-ring-calorie"), r: 44 }
 };
 
 const now = new Date();
@@ -436,7 +391,6 @@ function showDayDetail(dKey, year, month, day) {
 
     if (dayData[ringKey] === 1) {
       playPopAnimations(DETAIL_RINGS[ringKey].el, btn);
-      spawnRingSpectrum(DETAIL_RINGS[ringKey].spectrum, DETAIL_RINGS[ringKey].r);
       spawnConfetti(btn, ringKey);
       spawnSmallCelebration(btn, ringKey);
     }

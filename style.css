@@ -99,66 +99,13 @@ body {
   animation: ringPop 0.5s ease-out;
 }
 
-.ring-spectrum {
-  fill: none;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.ring-spectrum.ring-blue   { stroke: #00e0ff; }
-.ring-spectrum.ring-red    { stroke: #ff2d55; }
-.ring-spectrum.ring-yellow { stroke: #c6ff00; }
-
 @keyframes ringPop {
   0%   { transform: scale(1); }
   40%  { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 
-/* Supernova burst on full completion */
-.ring-progress.supernova {
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  /* drop the glow filter during the rapid zoom — SVG filters are very
-     expensive to re-rasterize on every animation frame on mobile */
-  filter: none;
-}
-
-.ring-progress.supernova.ring-blue {
-  animation-name: supernovaA;
-  animation-duration: 0.22s;
-}
-
-.ring-progress.supernova.ring-red {
-  animation-name: supernovaB;
-  animation-duration: 0.3s;
-  animation-delay: 0.08s;
-}
-
-.ring-progress.supernova.ring-yellow {
-  animation-name: supernovaC;
-  animation-duration: 0.18s;
-  animation-delay: 0.04s;
-}
-
-@keyframes supernovaA {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.7); }
-}
-
-@keyframes supernovaB {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(2.1); }
-}
-
-@keyframes supernovaC {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(2.6); }
-}
-
-/* Lightweight single-pulse version for mobile */
+/* Supernova burst on full completion — single light pulse */
 .ring-progress.supernova-light {
   animation-name: supernovaLight;
   animation-duration: 0.4s;
@@ -332,6 +279,10 @@ body {
   transform-origin: left center;
   filter: blur(0.5px);
   animation: laserSweep 0.35s linear forwards;
+}
+
+.laser-beam.slow {
+  animation-duration: 0.7s;
 }
 
 @keyframes laserSweep {
