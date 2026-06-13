@@ -208,7 +208,11 @@ function spawnSupernova(ringsConfig) {
 
 function spawnMegaCelebration(ringsConfig) {
   spawnFlash();
-  spawnSupernova(ringsConfig);
+
+  const supernovaBursts = 3;
+  for (let b = 0; b < supernovaBursts; b++) {
+    setTimeout(() => spawnSupernova(ringsConfig), b * 450);
+  }
 
   const laserWaves = IS_MOBILE ? 9 : 10;
   const laserInterval = IS_MOBILE ? 360 : 180;
@@ -217,7 +221,7 @@ function spawnMegaCelebration(ringsConfig) {
   }
 
   const waves = IS_MOBILE ? 3 : 8;
-  const confettiCount = IS_MOBILE ? 25 : 60;
+  const confettiCount = IS_MOBILE ? 40 : 75;
   for (let w = 0; w < waves; w++) {
     setTimeout(() => spawnMegaConfetti(confettiCount), w * 350);
   }
