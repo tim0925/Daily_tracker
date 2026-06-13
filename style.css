@@ -281,10 +281,6 @@ body {
   animation: laserSweep 0.35s linear forwards;
 }
 
-.laser-beam.slow {
-  animation-duration: 0.7s;
-}
-
 @keyframes laserSweep {
   0%   { transform: rotate(var(--angle)) translateX(-120vmax); opacity: 0; }
   10%  { opacity: 1; }

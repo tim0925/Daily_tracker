@@ -145,17 +145,16 @@ function getRingCenter() {
 
 function spawnLasers(count) {
   const center = getRingCenter();
-  const duration = IS_MOBILE ? 700 : 350;
   for (let i = 0; i < count; i++) {
     const beam = document.createElement("div");
-    beam.className = IS_MOBILE ? "laser-beam slow" : "laser-beam";
+    beam.className = "laser-beam";
     beam.style.left = `${center.x}px`;
     beam.style.top = `${center.y}px`;
     beam.style.background = `linear-gradient(90deg, transparent, ${CELEBRATION_COLOR}, transparent)`;
     beam.style.setProperty("--angle", `${Math.random() * 360}deg`);
 
     document.body.appendChild(beam);
-    setTimeout(() => beam.remove(), duration);
+    setTimeout(() => beam.remove(), 350);
   }
 }
 
@@ -214,10 +213,9 @@ function spawnMegaCelebration(ringsConfig) {
     setTimeout(() => spawnSupernova(ringsConfig), b * 450);
   }
 
-  const laserWaves = IS_MOBILE ? 9 : 10;
-  const laserInterval = IS_MOBILE ? 360 : 180;
+  const laserWaves = 10;
   for (let w = 0; w < laserWaves; w++) {
-    setTimeout(() => spawnLasers(6), w * laserInterval);
+    setTimeout(() => spawnLasers(6), w * 180);
   }
 
   const waves = IS_MOBILE ? 3 : 8;
@@ -244,7 +242,7 @@ function isAllComplete(stateObj) {
 
 function showCompletionCheck(checkEl) {
   checkEl.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="${CELEBRATION_COLOR}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="10" stroke-opacity="0.15"/>
+    <circle cx="12" cy="12" r="10" stroke-opacity="0.35"/>
     <path d="M7 12.5l3 3 7-7"/>
   </svg>`;
   checkEl.classList.remove("show");
