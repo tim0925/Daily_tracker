@@ -107,9 +107,9 @@ body {
   pointer-events: none;
 }
 
-.ring-spectrum.ring-blue   { stroke: #00e0ff; filter: url(#glow-blue); }
-.ring-spectrum.ring-red    { stroke: #ff2d55; filter: url(#glow-red); }
-.ring-spectrum.ring-yellow { stroke: #c6ff00; filter: url(#glow-yellow); }
+.ring-spectrum.ring-blue   { stroke: #00e0ff; }
+.ring-spectrum.ring-red    { stroke: #ff2d55; }
+.ring-spectrum.ring-yellow { stroke: #c6ff00; }
 
 @keyframes ringPop {
   0%   { transform: scale(1); }
@@ -121,6 +121,9 @@ body {
 .ring-progress.supernova {
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
+  /* drop the glow filter during the rapid zoom — SVG filters are very
+     expensive to re-rasterize on every animation frame on mobile */
+  filter: none;
 }
 
 .ring-progress.supernova.ring-blue {

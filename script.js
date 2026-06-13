@@ -240,17 +240,23 @@ function buildSpectrumPath(r, amplitudes) {
 
 function spawnRingSpectrum(spectrumEl, r, duration = 1400) {
   const maxAmp = r * 0.18;
-  const points = 56;
+  const points = 28;
+  const frameInterval = 1000 / 30;
   const start = performance.now();
+  let lastFrame = 0;
 
   spectrumEl.style.opacity = "1";
 
   function frame(now) {
     const elapsed = now - start;
     const t = Math.min(elapsed / duration, 1);
-    const decay = Math.pow(1 - t, 1.5);
-    const amplitudes = Array.from({ length: points }, () => (Math.random() * 2 - 1) * maxAmp * decay);
-    spectrumEl.setAttribute("d", buildSpectrumPath(r, amplitudes));
+
+    if (now - lastFrame >= frameInterval) {
+      lastFrame = now;
+      const decay = Math.pow(1 - t, 1.5);
+      const amplitudes = Array.from({ length: points }, () => (Math.random() * 2 - 1) * maxAmp * decay);
+      spectrumEl.setAttribute("d", buildSpectrumPath(r, amplitudes));
+    }
 
     if (t < 1) {
       requestAnimationFrame(frame);
