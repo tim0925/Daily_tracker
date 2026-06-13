@@ -266,6 +266,12 @@ body {
   animation: confettiFall 3s ease-in forwards;
 }
 
+@media (max-width: 600px) {
+  .confetti-piece.fall {
+    animation-duration: 4.5s;
+  }
+}
+
 @keyframes confettiFall {
   0% {
     transform: translate(0, 0) rotate(0deg);

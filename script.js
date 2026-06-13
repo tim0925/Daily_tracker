@@ -127,7 +127,7 @@ function spawnMegaConfetti(count) {
     piece.style.animationDelay = `${Math.random() * 0.4}s`;
 
     document.body.appendChild(piece);
-    setTimeout(() => piece.remove(), 3500);
+    setTimeout(() => piece.remove(), IS_MOBILE ? 5000 : 3500);
   }
 }
 
