@@ -95,6 +95,14 @@ body {
 .ring-progress.ring-glow.ring-red    { filter: url(#glow-red); }
 .ring-progress.ring-glow.ring-yellow { filter: url(#glow-yellow); }
 
+@media (max-width: 600px) {
+  .ring-progress.ring-glow.ring-blue,
+  .ring-progress.ring-glow.ring-red,
+  .ring-progress.ring-glow.ring-yellow {
+    filter: none;
+  }
+}
+
 .ring-progress.ring-pop {
   animation: ringPop 0.5s ease-out;
 }
