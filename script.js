@@ -127,7 +127,7 @@ function spawnMegaConfetti(count) {
     piece.style.animationDelay = `${Math.random() * 0.4}s`;
 
     document.body.appendChild(piece);
-    setTimeout(() => piece.remove(), IS_MOBILE ? 5000 : 3500);
+    setTimeout(() => piece.remove(), 3500);
   }
 }
 
@@ -218,7 +218,7 @@ function spawnMegaCelebration(ringsConfig) {
     setTimeout(() => spawnLasers(6), w * 180);
   }
 
-  const waves = IS_MOBILE ? 3 : 8;
+  const waves = IS_MOBILE ? 6 : 8;
   const confettiCount = IS_MOBILE ? 40 : 75;
   for (let w = 0; w < waves; w++) {
     setTimeout(() => spawnMegaConfetti(confettiCount), w * 350);

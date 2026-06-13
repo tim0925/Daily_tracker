@@ -146,7 +146,7 @@ body {
 }
 
 .center-check.show {
-  animation: checkPop 3.5s ease-out;
+  animation: checkPop 6s ease-out;
 }
 
 @keyframes checkPop {
@@ -264,12 +264,6 @@ body {
 .confetti-piece.fall {
   top: -20px;
   animation: confettiFall 3s ease-in forwards;
-}
-
-@media (max-width: 600px) {
-  .confetti-piece.fall {
-    animation-duration: 4.5s;
-  }
 }
 
 @keyframes confettiFall {
