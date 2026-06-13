@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAILY</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="glow-blue" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00e0ff" flood-opacity="0.7"/>
+      </filter>
+      <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#ff2d55" flood-opacity="0.7"/>
+      </filter>
+      <filter id="glow-yellow" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#c6ff00" flood-opacity="0.7"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="app">
+    <header class="header">
+      <h1>DAILY</h1>
+      <div class="date" id="today-date"></div>
+    </header>
+
+    <div class="view-toggle">
+      <button class="tab active" id="tab-today">Today</button>
+      <button class="tab" id="tab-calendar">Logs</button>
+    </div>
+
+    <section id="view-today">
+    <div class="buttons">
+      <button class="action-btn btn-blue" id="btn-work" data-key="work">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 6.5c-1.8-1.3-4.2-2-7-2v13c2.8 0 5.2.7 7 2 1.8-1.3 4.2-2 7-2V4.5c-2.8 0-5.2.7-7 2z"/>
+          <line x1="12" y1="6.5" x2="12" y2="19.5"/>
+        </svg>
+      </button>
+      <button class="action-btn btn-red" id="btn-exercise" data-key="exercise">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2.5c-1 3-4 4.5-4 8.5a4 4 0 008 0c0-1-.3-2-1-3 .8.6 2 2.2 2 4.5a5 5 0 01-10 0c0-4.5 3.5-7 5-10z"/>
+        </svg>
+      </button>
+      <button class="action-btn btn-yellow" id="btn-calorie" data-key="calorie">
+        <span class="kcal-label">Kcal</span>
+      </button>
+    </div>
+
+    <div class="ring-card">
+      <div class="rings-wrap">
+        <svg class="rings" viewBox="0 0 200 200">
+          <!-- background tracks -->
+          <circle class="ring-track" cx="100" cy="100" r="88" stroke-width="20"/>
+          <circle class="ring-track" cx="100" cy="100" r="66" stroke-width="20"/>
+          <circle class="ring-track" cx="100" cy="100" r="44" stroke-width="20"/>
+
+          <!-- progress rings -->
+          <circle id="ring-work" class="ring-progress ring-blue" cx="100" cy="100" r="88" stroke-width="20"/>
+          <circle id="ring-exercise" class="ring-progress ring-red" cx="100" cy="100" r="66" stroke-width="20"/>
+          <circle id="ring-calorie" class="ring-progress ring-yellow" cx="100" cy="100" r="44" stroke-width="20"/>
+
+          <!-- pop spectrum overlays -->
+          <path id="ring-work-spectrum" class="ring-spectrum ring-blue" stroke-width="20"/>
+          <path id="ring-exercise-spectrum" class="ring-spectrum ring-red" stroke-width="20"/>
+          <path id="ring-calorie-spectrum" class="ring-spectrum ring-yellow" stroke-width="20"/>
+        </svg>
+        <div class="center-check" id="center-check"></div>
+      </div>
+    </div>
+    </section>
+
+    <section id="view-calendar" class="hidden">
+      <div class="calendar-header">
+        <button class="cal-nav" id="cal-prev">‹</button>
+        <div class="cal-title" id="cal-title"></div>
+        <button class="cal-nav" id="cal-next">›</button>
+      </div>
+      <div class="calendar-weekdays">
+        <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
+      </div>
+      <div class="calendar-grid" id="calendar-grid"></div>
+
+      <div class="day-detail hidden" id="day-detail">
+        <h3 id="detail-date"></h3>
+
+        <div class="ring-card">
+          <div class="rings-wrap detail-rings-wrap">
+            <svg class="rings" viewBox="0 0 200 200">
+              <circle class="ring-track" cx="100" cy="100" r="88" stroke-width="20"/>
+              <circle class="ring-track" cx="100" cy="100" r="66" stroke-width="20"/>
+              <circle class="ring-track" cx="100" cy="100" r="44" stroke-width="20"/>
+              <circle id="detail-ring-work" class="ring-progress ring-blue" cx="100" cy="100" r="88" stroke-width="20"/>
+              <circle id="detail-ring-exercise" class="ring-progress ring-red" cx="100" cy="100" r="66" stroke-width="20"/>
+              <circle id="detail-ring-calorie" class="ring-progress ring-yellow" cx="100" cy="100" r="44" stroke-width="20"/>
+
+              <path id="detail-ring-work-spectrum" class="ring-spectrum ring-blue" stroke-width="20"/>
+              <path id="detail-ring-exercise-spectrum" class="ring-spectrum ring-red" stroke-width="20"/>
+              <path id="detail-ring-calorie-spectrum" class="ring-spectrum ring-yellow" stroke-width="20"/>
+            </svg>
+            <div class="center-check" id="detail-center-check"></div>
+          </div>
+        </div>
+
+        <div class="buttons">
+          <button class="action-btn btn-blue" id="detail-btn-work" data-key="work">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 6.5c-1.8-1.3-4.2-2-7-2v13c2.8 0 5.2.7 7 2 1.8-1.3 4.2-2 7-2V4.5c-2.8 0-5.2.7-7 2z"/>
+              <line x1="12" y1="6.5" x2="12" y2="19.5"/>
+            </svg>
+          </button>
+          <button class="action-btn btn-red" id="detail-btn-exercise" data-key="exercise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2.5c-1 3-4 4.5-4 8.5a4 4 0 008 0c0-1-.3-2-1-3 .8.6 2 2.2 2 4.5a5 5 0 01-10 0c0-4.5 3.5-7 5-10z"/>
+            </svg>
+          </button>
+          <button class="action-btn btn-yellow" id="detail-btn-calorie" data-key="calorie">
+            <span class="kcal-label">Kcal</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
