@@ -158,6 +158,21 @@ body {
   50%      { transform: scale(2.6); }
 }
 
+/* Lightweight single-pulse version for mobile */
+.ring-progress.supernova-light {
+  animation-name: supernovaLight;
+  animation-duration: 0.4s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: 1;
+  filter: none;
+}
+
+@keyframes supernovaLight {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
 /* Completion check */
 .center-check {
   position: absolute;

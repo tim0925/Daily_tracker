@@ -1,5 +1,7 @@
 const STORAGE_KEY = "trackerData";
 
+const IS_MOBILE = window.matchMedia("(max-width: 600px)").matches;
+
 const RINGS = {
   work: { el: document.getElementById("ring-work"), spectrum: document.getElementById("ring-work-spectrum"), r: 88 },
   exercise: { el: document.getElementById("ring-exercise"), spectrum: document.getElementById("ring-exercise-spectrum"), r: 66 },
@@ -194,25 +196,29 @@ function spawnSmallCelebration(originEl, ringKey) {
 }
 
 function spawnSupernova(ringsConfig) {
-  const duration = 2200;
+  const duration = IS_MOBILE ? 400 : 2200;
   Object.values(ringsConfig).forEach(({ el }) => {
-    el.classList.remove("supernova");
+    el.classList.remove("supernova", "supernova-light");
     void el.offsetWidth;
-    el.classList.add("supernova");
-    setTimeout(() => el.classList.remove("supernova"), duration);
+    el.classList.add(IS_MOBILE ? "supernova-light" : "supernova");
+    setTimeout(() => el.classList.remove("supernova", "supernova-light"), duration);
   });
 }
 
 function spawnMegaCelebration(ringsConfig) {
   spawnFlash();
   spawnSupernova(ringsConfig);
-  const laserWaves = 10;
+
+  const laserWaves = IS_MOBILE ? 3 : 10;
+  const laserCount = IS_MOBILE ? 4 : 6;
   for (let w = 0; w < laserWaves; w++) {
-    setTimeout(() => spawnLasers(6), w * 180);
+    setTimeout(() => spawnLasers(laserCount), w * 180);
   }
-  const waves = 8;
+
+  const waves = IS_MOBILE ? 3 : 8;
+  const confettiCount = IS_MOBILE ? 25 : 60;
   for (let w = 0; w < waves; w++) {
-    setTimeout(() => spawnMegaConfetti(60), w * 350);
+    setTimeout(() => spawnMegaConfetti(confettiCount), w * 350);
   }
 }
 
@@ -239,6 +245,8 @@ function buildSpectrumPath(r, amplitudes) {
 }
 
 function spawnRingSpectrum(spectrumEl, r, duration = 1400) {
+  if (IS_MOBILE) return;
+
   const maxAmp = r * 0.18;
   const points = 28;
   const frameInterval = 1000 / 30;
