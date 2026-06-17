@@ -89,7 +89,7 @@ body {
 
 .ring-blue   { stroke: #00e0ff; }
 .ring-red    { stroke: #ff2d55; }
-.ring-yellow { stroke: #c6ff00; }
+.ring-yellow { stroke: #5fd400; }
 
 .ring-progress.ring-glow.ring-blue   { filter: url(#glow-blue); }
 .ring-progress.ring-glow.ring-red    { filter: url(#glow-red); }
